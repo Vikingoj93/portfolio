@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background-dark: #2C3333;
+    --text-dark: #e2e8f0;
+    --button-dark-bg: #4a5568;
+    --button-dark-text: #e2e8f0;
+  
+    --background-light: #ffffff;
+    --text-light: #2C3333;
+    --button-light-bg: #3182ce;
+    --button-light-text: #ffffff;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  
+  
