@@ -2,21 +2,15 @@ import Link from "next/link";
 import { useState, useContext } from "react";
 import { Instagram, GitHub, Mail, Linkedin } from "react-feather";
 import dynamic from "next/dynamic";
-import { contextTheme } from "@/context/contextProvider";
+import { contextForm } from "@/context/contextProvider";
 
 export default function Contact() {
-
-  const {dark} = useContext(contextTheme)
 
   const styles = {
     link: "transition-transform duration-200 ease-out hover:scale-125",
   };
 
-  const [showForm, setShowForm] = useState<boolean>(false)
-
-  const toggleForm = ()=>{
-    setShowForm(!showForm)
-  }
+  const {showForm, toggleShowForm} = useContext(contextForm)
 
   const FormContact = dynamic(()=> import('@/components/FormContact'), {
     loading: ()=> <p>Loading...</p>
@@ -39,7 +33,7 @@ export default function Contact() {
               <GitHub />
             </Link>
             <button onClick={
-              ()=> toggleForm()
+              ()=> toggleShowForm(showForm)
             } className={` mx-3 ${styles.link}`}>
               <Mail />
             </button>
