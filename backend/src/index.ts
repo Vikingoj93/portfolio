@@ -1,17 +1,21 @@
 import express from 'express';
-import emailsRouter from './routes/emails';
+import { enviarMails } from './routes/emails';
 import cors from 'cors';
 import {rateLimit} from 'express-rate-limit';
+import { PORT, URL_FRONTEND } from './libs/config';
+import emailsSchema from './validations/emailsSchema';
+
+const router = express.Router();
 
 const app = express()
 
-/*const corsOptions = {
-    origin: 'http://localhost:3000',
+const corsOptions = {
+    origin: URL_FRONTEND,
     methods: ['GET','POST'],
     allowedHeaders: ['Content-Type']
-}*/
+}
 
-app.use(cors(/*corsOptions*/))
+app.use(cors(corsOptions))
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -22,12 +26,10 @@ const limiter = rateLimit({
 })
 
 app.use(express.json())
+app.use(router)
 
 app.use('/api/emails', limiter)
 
+router.post('/api/emails', emailsSchema, enviarMails)
 
-const port = 4000;
-
-app.use('/api/emails', emailsRouter)
-
-app.listen(port, ()=> console.log(`app running on port  ${port}`))
+app.listen(PORT, ()=> console.log(`app running on port  ${PORT}`))
